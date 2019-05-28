@@ -36,6 +36,12 @@ module Api
         end
       end
 
+      #GET /comments/in_task/:task_id
+      def in_task
+        @tasks = Task.where(:task_id => params[:task_id])
+        render json: @tasks
+      end
+
       # DELETE /comments/1
       def destroy
         @comment.destroy

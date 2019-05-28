@@ -35,6 +35,12 @@ module Api
         end
       end
 
+      #GET /tasks/in_project/:project_id
+      def in_project
+        @tasks = Task.where(:project_id => params[:project_id])
+        render json: @tasks
+      end
+
       # DELETE /tasks/1
       def destroy
         @task.destroy
