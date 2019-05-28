@@ -1,4 +1,6 @@
-class Api::V1::ProjectsController < ApplicationController
+module Api
+  module V1
+class ProjectsController < ApplicationController
   before_action :set_project, only: %i[show update destroy]
 
   # GET /projects
@@ -49,4 +51,6 @@ class Api::V1::ProjectsController < ApplicationController
   def project_params
     params.require(:project).permit(:name, :description)
   end
+end
+end
 end

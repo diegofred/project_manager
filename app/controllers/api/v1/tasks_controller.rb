@@ -1,5 +1,6 @@
-
-class Api::V1::TasksController < ApplicationController
+module Api
+  module V1
+class TasksController < ApplicationController
   before_action :set_task, only: [:show, :update, :destroy]
 
   # GET /tasks
@@ -49,4 +50,6 @@ class Api::V1::TasksController < ApplicationController
     def task_params
       params.require(:task).permit(:name, :text, :total_hours, :dead_line, :priority, :project_id)
     end
+end
+end
 end
