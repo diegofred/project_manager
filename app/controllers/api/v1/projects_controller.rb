@@ -3,24 +3,24 @@ module Api
     class ProjectsController < ApplicationController
       before_action :set_project, only: %i[show update destroy]
       before_action :authenticate_user!
+      load_and_authorize_resource
       # GET /projects
       def index
         @projects = Project.all
 
-        render json: @projects
+        render json: { status: 'SUCCESS', message: 'Loaded Projecs', data: @projects }
       end
 
       # GET /projects/1
       def show
-        render json: @project
+        render json: { status: 'SUCCESS', message: 'Loaded Projec', data: @projects }
       end
 
       # POST /projects
       def create
-        @project = Project.new(project_params)
-
+        @project = current_user.projects.build(project_params)
         if @project.save
-          render json: @project, status: :created, location: @project
+          render json: @project, status: :created
         else
           render json: @project.errors, status: :unprocessable_entity
         end

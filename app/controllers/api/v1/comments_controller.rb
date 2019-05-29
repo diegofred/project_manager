@@ -2,11 +2,11 @@ module Api
   module V1
     class CommentsController < ApplicationController
       before_action :set_comment, only: %i[show update destroy]
-      before_action :authenticate_user!
+      # before_action :authenticate_user!
 
       # GET /comments
       def index
-        @comments = Comment.all
+        @comments = Comment.accessible_by(current_ability).all
 
         render json: @comments
       end
@@ -18,10 +18,10 @@ module Api
 
       # POST /comments
       def create
-        @comment = Comment.new(comment_params)
+        @comment = current_user.comments.build(task_params)(comment_params)
 
         if @comment.save
-          render json: @comment, status: :created, location: @comment
+          render json: @comment, status: :created
         else
           render json: @comment.errors, status: :unprocessable_entity
         end
@@ -36,9 +36,9 @@ module Api
         end
       end
 
-      #GET /comments/in_task/:task_id
+      # GET /comments/in_task/:task_id
       def in_task
-        @tasks = Task.where(:task_id => params[:task_id])
+        @tasks = Task.accessible_by(current_ability).where(task_id: params[:task_id])
         render json: @tasks
       end
 
