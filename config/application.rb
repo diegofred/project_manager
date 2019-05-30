@@ -27,7 +27,7 @@ module ProjectManager4
         resource '*',
                  headers: :any,
                  expose: ['access-token', 'expiry', 'token-type', 'uid', 'client'],
-                 methods: %i[get post patch delete options]
+                 methods: %i[get post patch delete put options]
       end
     end
 
