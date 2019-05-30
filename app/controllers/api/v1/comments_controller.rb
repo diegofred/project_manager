@@ -6,7 +6,7 @@ module Api
 
       # GET /comments
       def index
-        @comments = Comment.accessible_by(current_ability).all
+        @comments = Comment.all
 
         render json: @comments
       end
@@ -38,7 +38,7 @@ module Api
 
       # GET /comments/in_task/:task_id
       def in_task
-        @tasks = Task.accessible_by(current_ability).where(task_id: params[:task_id])
+        @tasks = Comment.where(task_id: params[:task_id])
         render json: @tasks
       end
 
