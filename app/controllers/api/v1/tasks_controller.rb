@@ -2,7 +2,7 @@ module Api
   module V1
     class TasksController < ApplicationController
       before_action :set_task, only: %i[show update destroy]
-      # before_action :authenticate_user!
+      before_action :authenticate_user!
       # GET /tasks
       def index
         @tasks = Task.accessible_by(current_ability).all
