@@ -3,6 +3,7 @@ module Api
     class ProjectsController < ApplicationController
       before_action :set_project, only: %i[show update destroy]
       before_action :authenticate_user!
+
       # GET /projects
       def index
         @projects = policy_scope(Project).order('id desc')
@@ -27,6 +28,7 @@ module Api
 
       # PATCH/PUT /projects/1
       def update
+        # authorize @project, :update?
         if @project.update(project_params)
           render json: @project
         else

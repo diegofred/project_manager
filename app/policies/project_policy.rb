@@ -10,11 +10,11 @@ class ProjectPolicy < ApplicationPolicy
     @project = project
   end
 
-  #   def update?
-  #     user.id == project.user_id
-  #   end
+  def update?
+    @user.id == @project.user_id
+  end
 
-  #   def destroy?
-  #     user.id == project.user_id
-  #   end
+  def destroy?
+    @user.id == @project.user_id
+  end
 end
