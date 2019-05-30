@@ -5,7 +5,7 @@ module Api
       before_action :authenticate_user!
       # GET /tasks
       def index
-        @tasks = Task.accessible_by(current_ability).all
+        @tasks = Task.all
 
         render json: @tasks
       end
@@ -36,7 +36,7 @@ module Api
 
       # GET /tasks/in_project/:project_id
       def in_project
-        @tasks = Task.accessible_by(current_ability).where(project_id: params[:project_id])
+        @tasks = Task.where(project_id: params[:project_id])
         render json: @tasks
       end
 
