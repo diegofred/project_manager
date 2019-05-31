@@ -18,7 +18,7 @@ module Api
 
       # POST /comments
       def create
-        @comment = current_user.comments.build(task_params)(comment_params)
+        @comment = current_user.comments.build(comment_params)
 
         if @comment.save
           render json: @comment, status: :created
