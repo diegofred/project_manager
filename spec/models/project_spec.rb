@@ -1,5 +1,10 @@
-require 'rails_helper'
+require "rails_helper"
 
 RSpec.describe Project, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "A valid Project" do
+    p = Project.new
+    p.name = "A Valid Name"
+    p.description = "A simple description"
+    expect(p.valid?).to eq true
+  end
 end
