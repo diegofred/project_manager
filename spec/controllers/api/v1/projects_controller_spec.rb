@@ -25,6 +25,23 @@ require 'rails_helper'
 
 RSpec.describe Api::V1::ProjectsController, type: :controller do
 
+
+
+
+
+  #The authentication header looks something like this:
+  #{"access-token"=>'XXXXXXXXXXXX',"token_type","client"=>"etc"}
+
+  describe "Whether access is ocurring properly", type: :requers def 
+  
+    
+  end
+
+
+
+
+
+
   # This should return the minimal set of attributes required to create a valid
   # Project. As you add validations to Project, be sure to
   # adjust the attributes here as well.
@@ -39,7 +56,11 @@ RSpec.describe Api::V1::ProjectsController, type: :controller do
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # ProjectsController. Be sure to keep this updated too.
-  let(:valid_session) { {} }
+  let(:valid_session) { {
+
+
+
+  } }
 
   describe "GET #index" do
     it "returns a success response" do

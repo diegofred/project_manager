@@ -48,6 +48,7 @@ GEM
     coderay (1.1.2)
     concurrent-ruby (1.1.5)
     crass (1.0.4)
+    database_cleaner (1.7.0)
     debug_inspector (0.0.3)
     devise (4.6.2)
       bcrypt (~> 3.0)
@@ -181,6 +182,7 @@ DEPENDENCIES
   bcrypt (~> 3.1.7)
   byebug
   cancancan
+  database_cleaner
   devise
   devise_token_auth
   factory_bot_rails
