@@ -53,6 +53,16 @@ module Api
         @task = Task.find(params[:id])
       end
 
+      def set_task_to_done
+        @task = Task.find(params[:id])
+        if task.done?
+          task.done!
+          render json: @task
+        else
+          render json: { status: 'This taks has already been done' }, status: :unprocessable_entity
+        end
+      end
+
       # Only allow a trusted parameter "white list" through.
       def task_params
         params.require(:task).permit(:name, :text, :total_hours, :dead_line, :priority, :project_id)
