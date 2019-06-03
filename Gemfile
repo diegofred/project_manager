@@ -49,4 +49,12 @@ gem 'devise_token_auth'
 #gem 'omniauth'
 gem 'cancancan'
 gem 'rack-cors', :require => 'rack/cors'
-gem 'database_cleaner'
+
+
+group :test do
+  gem 'shoulda-matchers'
+  gem 'rails-controller-testing'
+  gem 'database_cleaner'
+  gem 'shoulda-matchers'
+end
+
