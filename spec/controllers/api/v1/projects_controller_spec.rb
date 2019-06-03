@@ -29,17 +29,6 @@ RSpec.describe Api::V1::ProjectsController, type: :controller do
 
 
 
-  #The authentication header looks something like this:
-  #{"access-token"=>'XXXXXXXXXXXX',"token_type","client"=>"etc"}
-
-  describe "Whether access is ocurring properly", type: :requers def 
-  
-    
-  end
-
-
-
-
 
 
   # This should return the minimal set of attributes required to create a valid
