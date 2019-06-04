@@ -16,7 +16,7 @@ class Task < ApplicationRecord
   enum status: %i[to_do done]
 
   def set_inicial_status
-    self.status_id = Task.statuses[:to_do]
+    self.status = Task.statuses[:to_do]
   end
 
   # def get_status

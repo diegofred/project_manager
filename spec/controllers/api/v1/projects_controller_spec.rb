@@ -1,11 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe Api::V1::ProjectsController, type: :controller do
+
+  login_user
+
   # This should return the minimal set of attributes required to create a valid
   # Project. As you add validations to Project, be sure to
   # adjust the attributes here as well.
-  login_user
-
   let(:valid_attributes) do
     { name: 'a Valid name', description: 'Valid Description' }
   end
@@ -68,6 +69,7 @@ RSpec.describe Api::V1::ProjectsController, type: :controller do
         expect(body['name']).to eq(new_attributes[:name])
         expect(body['description']).to eq(new_attributes[:description])
         expect(response).to have_http_status(:ok)
+        expect(response.content_type).to eq('application/json')
       end
 
       it 'renders a JSON response with the project' do
