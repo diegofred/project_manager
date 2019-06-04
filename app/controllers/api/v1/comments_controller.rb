@@ -18,6 +18,7 @@ module Api
 
       # POST /comments
       def create
+        @task = Task.find(params[:comment][:task_id])
         @comment = current_user.comments.build(comment_params)
 
         if @comment.save
@@ -38,6 +39,7 @@ module Api
 
       # GET /comments/in_task/:task_id
       def in_task
+        @task = Task.find(params[:task_id])
         @tasks = Comment.where(task_id: params[:task_id])
         render json: @tasks
       end

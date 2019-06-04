@@ -17,6 +17,7 @@ module Api
 
       # POST /tasks
       def create
+        @project = Project.find(params[:task][:project_id])
         @task = current_user.tasks.build(task_params)
         if @task.save
           render json: @task, status: :created
@@ -36,6 +37,7 @@ module Api
 
       # GET /tasks/in_project/:project_id
       def in_project
+        @project = Project.find(params[:project_id])
         @tasks = Task.includes(:comments).where(project_id: params[:project_id])
 
         render json: @tasks, include: :comments

@@ -6,7 +6,6 @@ module Api
       # GET /projects
       def index
         @projects = current_user.projects
-
         render json: { status: 'SUCCESS', message: 'Loaded Projecs', data: @projects }
       end
 
