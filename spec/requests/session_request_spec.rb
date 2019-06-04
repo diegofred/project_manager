@@ -41,8 +41,6 @@ describe 'Whether access is ocurring properly', type: :request do
           h[k] = '123' if k == 'access-token'
         end
       end
-      puts @current_user.as_json
-
       get api_v1_project_path(@project.id), headers: auth_params
       expect(response).not_to have_http_status(:success)
     end

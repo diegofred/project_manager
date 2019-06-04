@@ -7,8 +7,8 @@ class Task < ApplicationRecord
   validates :name, presence: true, length: { minimum: 5 }
   validates :description, presence: true
   validates :user, presence: true
-  validates :description, presence: true
-  validates :total_hours, presence: true, numericality: { greater_than: 0 }
+  validates :total_hours, numericality: { greater_than: 0 }
+
   validates :user_id, presence: true
 
   before_create :set_inicial_status
