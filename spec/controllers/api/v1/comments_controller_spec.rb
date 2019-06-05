@@ -80,8 +80,9 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
       it "attaches the uploaded file" do
         file = fixture_file_upload(Rails.root.join("public", "Comprobante de pago.pdf"), "Application/pdf")
         expect {
-          post :create, params: {post: {file: file}}
+          post :create, params: {comment: {file: file}.merge(valid_attributes.merge(task_id: @task.id))}
         }.to change(ActiveStorage::Attachment, :count).by(1)
+        expect(response).to have_http_status(:created)
       end
     end
   end
@@ -100,9 +101,27 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
         expect(response).to have_http_status(:ok)
       end
 
+      it "updated attached file - Add" do
+        file = fixture_file_upload(Rails.root.join("public", "Comprobante de pago.pdf"), "Application/pdf")
+        comment = FactoryBot.create(:comment, task_id: @task.id, user_id: @user.id)
+        put :update, params: {id: comment.to_param, comment: new_attributes.merge({ file: file})}
+        comment.reload
+        expect(comment.description).to eq(new_attributes[:description])
+        expect(response).to have_http_status(:ok)
+        expect(comment.file.attached?).to eq(true)
+      end
+
+      it "updated attached file - Remove" do
+        comment = FactoryBot.create(:comment, task_id: @task.id, user_id: @user.id)
+        put :update, params: {id: comment.to_param, comment: new_attributes.merge({ file: 'destroy'})}
+        comment.reload
+        expect(comment.description).to eq(new_attributes[:description])
+        expect(response).to have_http_status(:ok)
+        expect(comment.file.attached?).to eq(false)
+      end
+
       it "renders a JSON response with the comment" do
         comment = FactoryBot.create(:comment, task_id: @task.id, user_id: @user.id)
-
         put :update, params: {id: comment.to_param, comment: valid_attributes.merge(task_id: @task.id)}
         expect(response).to have_http_status(:ok)
         expect(response.content_type).to eq("application/json")
@@ -118,6 +137,8 @@ RSpec.describe Api::V1::CommentsController, type: :controller do
         expect(response.content_type).to eq("application/json")
       end
     end
+
+
   end
 
   describe "DELETE #destroy" do
