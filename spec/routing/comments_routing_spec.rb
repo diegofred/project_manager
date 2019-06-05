@@ -25,5 +25,9 @@ RSpec.describe Api::V1::CommentsController, type: :routing do
     it 'routes to #destroy' do
       expect(delete: '/api/v1/comments/1').to route_to('api/v1/comments#destroy', id: '1')
     end
+
+    it 'routes to #in_task' do
+      expect(get: '/api/v1/comments/in_task/1').to route_to('api/v1/comments#in_task', task_id: '1')
+    end
   end
 end

@@ -3,11 +3,9 @@ module Api
     class ProjectsController < ApplicationController
       before_action :set_project, only: %i[show update destroy]
       before_action :authenticate_user!
-
       # GET /projects
       def index
-        @projects = policy_scope(Project).order('id desc')
-
+        @projects = current_user.projects
         render json: { status: 'SUCCESS', message: 'Loaded Projecs', data: @projects }
       end
 
@@ -28,7 +26,7 @@ module Api
 
       # PATCH/PUT /projects/1
       def update
-        # authorize @project, :update?
+        authorize @project, :update?
         if @project.update(project_params)
           render json: @project
         else
@@ -38,6 +36,7 @@ module Api
 
       # DELETE /projects/1
       def destroy
+        authorize @project, :destroy?
         @project.destroy
       end
 

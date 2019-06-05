@@ -2,11 +2,10 @@ module Api
   module V1
     class TasksController < ApplicationController
       before_action :set_task, only: %i[show update destroy]
-      # before_action :authenticate_user!
+      before_action :authenticate_user!
       # GET /tasks
       def index
-        @tasks = Task.accessible_by(current_ability).all
-
+        @tasks = Task.all
         render json: @tasks
       end
 
@@ -17,6 +16,7 @@ module Api
 
       # POST /tasks
       def create
+        @project = Project.find(params[:task][:project_id])
         @task = current_user.tasks.build(task_params)
         if @task.save
           render json: @task, status: :created
@@ -27,6 +27,7 @@ module Api
 
       # PATCH/PUT /tasks/1
       def update
+        authorize @task, :update?
         if @task.update(task_params)
           render json: @task
         else
@@ -36,12 +37,15 @@ module Api
 
       # GET /tasks/in_project/:project_id
       def in_project
-        @tasks = Task.accessible_by(current_ability).where(project_id: params[:project_id])
-        render json: @tasks
+        @project = Project.find(params[:project_id])
+        @tasks = Task.includes(:comments).where(project_id: params[:project_id])
+
+        render json: @tasks, include: :comments
       end
 
       # DELETE /tasks/1
       def destroy
+        authorize @task, :destroy?
         @task.destroy
       end
 
@@ -52,9 +56,20 @@ module Api
         @task = Task.find(params[:id])
       end
 
+      def set_task_to_done
+        authorize @task, :update?
+        @task = Task.find(params[:id])
+        if task.done?
+          task.done!
+          render json: @task
+        else
+          render json: { status: 'This taks has already been done' }, status: :unprocessable_entity
+        end
+      end
+
       # Only allow a trusted parameter "white list" through.
       def task_params
-        params.require(:task).permit(:name, :text, :total_hours, :dead_line, :priority, :project_id)
+        params.require(:task).permit(:name, :description, :text, :total_hours, :dead_line, :priority, :project_id)
       end
     end
   end

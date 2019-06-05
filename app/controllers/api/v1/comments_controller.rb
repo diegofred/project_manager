@@ -2,11 +2,11 @@ module Api
   module V1
     class CommentsController < ApplicationController
       before_action :set_comment, only: %i[show update destroy]
-      # before_action :authenticate_user!
+      before_action :authenticate_user!
 
       # GET /comments
       def index
-        @comments = Comment.accessible_by(current_ability).all
+        @comments = Comment.all
 
         render json: @comments
       end
@@ -18,9 +18,12 @@ module Api
 
       # POST /comments
       def create
-        @comment = current_user.comments.build(task_params)(comment_params)
-
-        if @comment.save
+        @task = Task.find(params[:comment][:task_id])
+        @comment = current_user.comments.build(comment_params)
+        # if comment_params[:file].present? && comment_params[:file].is_a?(ActionDispatch::Http::UploadedFile)
+        #   @comment.file.attach(comment_params[:file])
+        # end
+        if @comment.save      
           render json: @comment, status: :created
         else
           render json: @comment.errors, status: :unprocessable_entity
@@ -29,7 +32,8 @@ module Api
 
       # PATCH/PUT /comments/1
       def update
-        if @comment.update(comment_params)
+        authorize @comment, :update?
+        if UpdateCommentService.new(@comment, comment_params).call
           render json: @comment
         else
           render json: @comment.errors, status: :unprocessable_entity
@@ -38,12 +42,14 @@ module Api
 
       # GET /comments/in_task/:task_id
       def in_task
-        @tasks = Task.accessible_by(current_ability).where(task_id: params[:task_id])
+        @task = Task.find(params[:task_id])
+        @tasks = Comment.where(task_id: params[:task_id])
         render json: @tasks
       end
 
       # DELETE /comments/1
       def destroy
+        authorize @comment, :destroy?
         @comment.destroy
       end
 
@@ -56,7 +62,7 @@ module Api
 
       # Only allow a trusted parameter "white list" through.
       def comment_params
-        params.require(:comment).permit(:description, :attach, :task_id)
+        params.require(:comment).permit(:description, :file, :task_id)
       end
     end
   end

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   mount_devise_token_auth_for 'User', at: 'auth'
   # devise_for :models
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
@@ -13,7 +14,7 @@ Rails.application.routes.draw do
       end
       resources :comments do
         collection do
-          get 'in_tasks/:task_id', as: :in_task, action: :in_task
+          get 'in_task/:task_id', as: :in_task, action: :in_task
         end
       end
     end

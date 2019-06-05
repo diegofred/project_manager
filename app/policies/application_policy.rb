@@ -7,11 +7,11 @@ class ApplicationPolicy
   end
 
   def index?
-    user.id = record.user_id
+    true
   end
 
   def show?
-    false
+    true
   end
 
   def create?
@@ -23,15 +23,11 @@ class ApplicationPolicy
   end
 
   def update?
-    false
-  end
-
-  def edit?
-    update?
+    @user.id == @record.user_id
   end
 
   def destroy?
-    false
+   true
   end
 
   class Scope

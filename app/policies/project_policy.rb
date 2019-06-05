@@ -15,6 +15,6 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def destroy?
-    @user.id == @project.user_id
+     @user.id == @project.user_id
   end
 end

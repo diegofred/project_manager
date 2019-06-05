@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :comment do
-    description { "MyString" }
+    sequence(:description) { |i| "My comment #{i}" }
     attach { "MyString" }
     task { nil }
   end

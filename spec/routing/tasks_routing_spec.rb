@@ -25,5 +25,9 @@ RSpec.describe Api::V1::TasksController, type: :routing do
     it 'routes to #destroy' do
       expect(delete: '/api/v1/tasks/1').to route_to('api/v1/tasks#destroy', id: '1')
     end
+
+    it 'routes to #in_project' do
+      expect(get: '/api/v1/tasks/in_project/1').to route_to('api/v1/tasks#in_project', project_id: '1')
+    end
   end
 end
