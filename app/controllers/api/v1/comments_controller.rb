@@ -30,7 +30,7 @@ module Api
 
       # PATCH/PUT /comments/1
       def update
-        if @comment.update(comment_params)
+        if UpdateCommentService.new(@comment, comment_params).call
           render json: @comment
         else
           render json: @comment.errors, status: :unprocessable_entity
@@ -58,7 +58,7 @@ module Api
 
       # Only allow a trusted parameter "white list" through.
       def comment_params
-        params.require(:comment).permit(:description, :attach, :task_id)
+        params.require(:comment).permit(:description, :file, :task_id)
       end
     end
   end
