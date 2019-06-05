@@ -20,8 +20,12 @@ module Api
       def create
         @task = Task.find(params[:comment][:task_id])
         @comment = current_user.comments.build(comment_params)
+        byebug
 
         if @comment.save
+          if comment_params[:file].present? and comment_params[:file].is_a?(ActionDispatch::Http::UploadedFile)
+            @comment.file.attach(params[:file])
+          end
           render json: @comment, status: :created
         else
           render json: @comment.errors, status: :unprocessable_entity
