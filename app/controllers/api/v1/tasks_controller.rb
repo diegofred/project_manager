@@ -37,10 +37,9 @@ module Api
 
       # GET /tasks/in_project/:project_id
       def in_project
-        @project = Project.find(params[:project_id])
-        @tasks = Task.includes(:comments).where(project_id: params[:project_id])
-
-        render json: @tasks, include: :comments
+       # byebug
+        @project = Project.includes(:tasks => [:comments] ).find(params[:project_id])
+        render json: @project, include: :tasks
       end
 
       # DELETE /tasks/1

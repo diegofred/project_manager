@@ -35,7 +35,7 @@ RSpec.describe Api::V1::TasksController, type: :controller do
       expect(response).to be_successful
       expect(response.content_type).to eq('application/json')
       body = JSON.parse(response.body)
-      expect(body.count).to eq(5)
+      expect(body['tasks'].count).to eq(5)
     end
 
     it 'returns a not found response' do
