@@ -22,9 +22,6 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
-Diego, como estas?
-
-Te envio el challenge para cerrar el proceso de la entrevista. Te pido que nos envies el link al repo donde lo subas asi lo revisamos.
 
 Task Definition
 I want to manage my tasks and projects more effectively. I need a simple tool that helps me control my task flow.
